@@ -27,14 +27,14 @@ By definition.
 
 
 class MinimalSumOfSquares_Naive:
-    def _squares(n):
+    def __squares(n):
         mid = n // 2
         cands = list(np.arange(mid) + 1)
         sqs = [i * i for i in cands if i * i <= n]
         rqs = list(reversed(sqs))
         return rqs
 
-    def _leader_possibilities(self, lead_sqr, rest_sqrs, N):
+    def __leader_possibilities(self, lead_sqr, rest_sqrs, N):
         results = []
 
         if lead_sqr <= N:
@@ -46,7 +46,7 @@ class MinimalSumOfSquares_Naive:
                     results.append(leaders)
                 elif len(rest_sqrs) > 1:
                     for i in range( len(rest_sqrs) - 1):
-                        sub_res = self._leader_possibilities(rest_sqrs[i], rest_sqrs[i+1:], N - np.sum(leaders))
+                        sub_res = self.__leader_possibilities(rest_sqrs[i], rest_sqrs[i+1:], N - np.sum(leaders))
                         for one_sub_res in sub_res:
                             complete = leaders + one_sub_res
                             results.append(complete)
@@ -58,7 +58,7 @@ class MinimalSumOfSquares_Naive:
         else: # lead_sqr > N : this lead_sqr is bigger than the remaining N. try the next lead square.
             if len(rest_sqrs) > 1:
                 for i in range(len(rest_sqrs) - 1):
-                    sub_res = self._leader_possibilities(rest_sqrs[i], rest_sqrs[i + 1:], N)
+                    sub_res = self.__leader_possibilities(rest_sqrs[i], rest_sqrs[i + 1:], N)
                     results.extend(sub_res)
             else: # len(rest_sqrs)  = 1
                 ones = [1]*N
@@ -66,17 +66,17 @@ class MinimalSumOfSquares_Naive:
 
         return results
 
-    def _possibilities(self, sqrs, n):
+    def __possibilities(self, sqrs, n):
         all_posbs = []
         for i in range( len(sqrs) ):
-            posbs_sets = self._leader_possibilities(sqrs[i], sqrs[i+1:], n)
+            posbs_sets = self.__leader_possibilities(sqrs[i], sqrs[i+1:], n)
             all_posbs.extend(posbs_sets)
 
         return all_posbs
 
     def sum_sqrt(self, n):
-        sqrs = MinimalSumOfSquares_Naive._squares(n)
-        poss = self._possibilities(sqrs, n)
+        sqrs = MinimalSumOfSquares_Naive.__squares(n)
+        poss = self.__possibilities(sqrs, n)
 
         def get_winner_possibility(possibs):
             sorts = {}
@@ -102,3 +102,4 @@ def tester(msos,  limit):
 
 if __name__ == '__main__':
     tester(MinimalSumOfSquares_Naive(), 100)
+
