@@ -20,7 +20,7 @@ def format_list(l):
     """
     print a sequence keeping elements aligned to the left
     """
-    tmpl = '{:<3}'
+    tmpl = '{:<4}'
     strs = [tmpl.format(one) for one in l]
     return ' '.join(strs)
 
